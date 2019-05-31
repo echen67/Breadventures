@@ -68,28 +68,6 @@ public class PlayerMovement : MonoBehaviour {
 
         Jumping();
 
-        //Crouching
-        /*
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            collider2d.size = new Vector2(originalSize.x, originalSize.y-2);
-            float difference = originalSize.y - (originalSize.y-2);
-            collider2d.offset = new Vector2(originalOffset.x, -(originalSize.y-2));
-            animator.SetInteger("Test", 3);
-            crouching = true;
-            playerSpeed = 5f;
-        }
-        
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            collider2d.size = originalSize;
-            collider2d.offset = originalOffset;
-            animator.SetInteger("Test", 0);
-            crouching = false;
-            playerSpeed = 10f;
-        }
-        */
-
         //Change direction based on the last key (left or right) pressed
         if (currentDirection != newDirection)
         {
@@ -99,36 +77,21 @@ public class PlayerMovement : MonoBehaviour {
 
         //Moving Left and Right
         //if (Input.GetKey(KeyCode.RightArrow))
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxisRaw("Horizontal") > 0)
         {
             transform.Translate(Vector2.right * Time.deltaTime * playerSpeed, Space.World);
             //Vector2 newPos = body2D.position;
             //newPos.x += playerSpeed * Time.deltaTime;
             //body2D.MovePosition(newPos);
             newDirection = true;
-            /*if (crouching)
-            {
-                animator.SetInteger("Test", 3);
-            } else
-            {
-                animator.SetInteger("Test", 1);
-            }*/
             walking = true;
         }
 
         //if (Input.GetKey(KeyCode.LeftArrow))
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxisRaw("Horizontal") < 0)
         {
             transform.Translate(Vector2.left * Time.deltaTime * playerSpeed, Space.World);
             newDirection = false;
-            /*if (crouching)
-            {
-                animator.SetInteger("Test", 3);
-            }
-            else
-            {
-                animator.SetInteger("Test", 1);
-            }*/
             walking = true;
         }
 
@@ -142,31 +105,14 @@ public class PlayerMovement : MonoBehaviour {
         //if (Input.GetKeyUp(KeyCode.LeftArrow))
         if (Input.GetAxis("Horizontal") == 0)
         {
-            /*if (!crouching)
-            {
-                animator.SetInteger("Test", 0);
-            }*/
             walking = false;
         }
 
         //if (Input.GetKeyUp(KeyCode.RightArrow))
         if (Input.GetAxis("Horizontal") == 0)
         {
-            /*if (!crouching)
-            {
-                animator.SetInteger("Test", 0);
-            }*/
             walking = false;
         }
-
-        //Jumping animation
-        /*if (absVelY > 0)
-        {
-            if (!crouching)
-            {
-                animator.SetInteger("Test", 2);
-            }
-        }*/
 
         Climbing();
         Glide();

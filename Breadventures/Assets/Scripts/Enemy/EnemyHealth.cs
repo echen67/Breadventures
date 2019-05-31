@@ -12,6 +12,8 @@ public class EnemyHealth : MonoBehaviour {
     private GameObject gameManager;
     private PlayerLevel levelScript;
 
+    public int range = 2;   // position range that items drop
+
     AudioSource hurtSFX;
 
     void Awake()
@@ -25,7 +27,7 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (hurtSFX != null)
         {
-            Debug.Log("HURT");
+            //Debug.Log("HURT");
             hurtSFX.Play();
         }
         currentHealth -= damage;
@@ -37,7 +39,9 @@ public class EnemyHealth : MonoBehaviour {
             {
                 if(decision <= chances[i])
                 {
-                    Instantiate(drops[i], gameObject.transform.position, Quaternion.identity);
+                    Vector3 orig = gameObject.transform.position;
+                    Vector3 pos = new Vector3(orig.x + Random.value * range, orig.y, orig.z);
+                    Instantiate(drops[i], pos, Quaternion.identity);
                 }
             }
             Die();

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
+    public int range = 5;       // how wide the spawn area is
     public float spawnRate = 5f;
     public int pooledAmount = 5;
     public GameObject[] enemiesList;
@@ -29,7 +30,9 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (!enemiesList[i].activeInHierarchy)
             {
-                enemiesList[i].transform.position = gameObject.transform.position;
+                Vector3 orig = gameObject.transform.position;
+                Vector3 pos = new Vector3(orig.x + Random.value * range, orig.y, orig.z);
+                enemiesList[i].transform.position = pos;
                 enemiesList[i].SetActive(true);
                 return;
             }

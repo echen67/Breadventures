@@ -14,9 +14,12 @@ public class PlayerAttack : MonoBehaviour {
 
     private PlayerMovement playerMovement;
 
+    Animator animator;
+
     void Awake () {
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         punchSound = gameObject.GetComponent<AudioSource>();
+        animator = gameObject.GetComponent<Animator>();
 	}
 	
 	void Update () {
@@ -24,13 +27,19 @@ public class PlayerAttack : MonoBehaviour {
         RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), new Vector2(1, 0), attackRange, enemiesMask);
 
         //Debug.DrawRay(gameObject.transform.position, Vector2.right*attackRange, Color.white);
-
         //Debug.Log(hitLeft.collider.gameObject.tag);
 
+        // Play sound effect and animation regardless of whether there's an enemy
         //if (Input.GetKeyDown(KeyCode.A))
         if (Input.GetButtonDown("Fire1"))
         {
             punchSound.Play();
+            animator.SetBool("Attack", true);
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            animator.SetBool("Attack", false);
         }
 
         if(hitLeft != false && playerMovement.currentDirection == false)
