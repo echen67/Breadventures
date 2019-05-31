@@ -58,6 +58,15 @@ public class PlayerEnergy : MonoBehaviour
         }
     }
 
+    public void UseEnergy(float amount)
+    {
+        currentEnergy -= amount;
+        if (currentEnergy < 0)
+        {
+            currentEnergy = 0;
+        }
+    }
+
     public void EnoughEnergy(float amount)
     {
         if (currentEnergy >= amount)

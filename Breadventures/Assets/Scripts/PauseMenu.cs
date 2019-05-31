@@ -31,6 +31,7 @@ public class PauseMenu : MonoBehaviour {
             canvasAlpha = pauseOpen ? 1 : 0;
             canvasGroup.alpha = canvasAlpha;
             canvasGroup.interactable = !canvasGroup.interactable;
+            canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
             /*foreach(Collider2D collider in childrenColliders)
             {
                 collider.enabled = pauseOpen;

@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour {
     int enemiesLayer = 8;
     int enemiesMask = 1 << 8;
 
+    AudioSource[] audios;
+    AudioSource jumpSFX;
+
     void Awake()
     {
         if (self == null)
@@ -48,6 +51,8 @@ public class PlayerMovement : MonoBehaviour {
         collider2d = GetComponent<BoxCollider2D>();
         originalSize = collider2d.size;
         originalOffset = collider2d.offset;
+        audios = gameObject.GetComponents<AudioSource>();
+        jumpSFX = audios[1];
     }
 
     void Update()
@@ -93,9 +98,13 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //Moving Left and Right
-        if (Input.GetKey(KeyCode.RightArrow))
+        //if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetAxis("Horizontal") > 0)
         {
             transform.Translate(Vector2.right * Time.deltaTime * playerSpeed, Space.World);
+            //Vector2 newPos = body2D.position;
+            //newPos.x += playerSpeed * Time.deltaTime;
+            //body2D.MovePosition(newPos);
             newDirection = true;
             /*if (crouching)
             {
@@ -107,7 +116,8 @@ public class PlayerMovement : MonoBehaviour {
             walking = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        //if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetAxis("Horizontal") < 0)
         {
             transform.Translate(Vector2.left * Time.deltaTime * playerSpeed, Space.World);
             newDirection = false;
@@ -129,7 +139,8 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //Stop walking left and right
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        //if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetAxis("Horizontal") == 0)
         {
             /*if (!crouching)
             {
@@ -138,7 +149,8 @@ public class PlayerMovement : MonoBehaviour {
             walking = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        //if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetAxis("Horizontal") == 0)
         {
             /*if (!crouching)
             {
@@ -227,9 +239,11 @@ public class PlayerMovement : MonoBehaviour {
 
     void Climbing()
     {
-        if (Input.GetKey(KeyCode.UpArrow) && canClimb)
+        //if (Input.GetKey(KeyCode.UpArrow) && canClimb)
+        if (Input.GetAxis("Vertical") > 0 && canClimb)
             transform.Translate(Vector2.up * Time.deltaTime * playerSpeed, Space.World);
-        if(Input.GetKey(KeyCode.DownArrow) && canClimb)
+        //if(Input.GetKey(KeyCode.DownArrow) && canClimb)
+        if (Input.GetAxis("Vertical") < 0 && canClimb)
             transform.Translate(Vector2.down * Time.deltaTime * playerSpeed, Space.World);
     }
 
@@ -241,12 +255,14 @@ public class PlayerMovement : MonoBehaviour {
                 jumpheight = 0;
             else if (!canClimb)
                 jumpheight = 15;
-            if (Input.GetKeyDown(KeyCode.Space))
+            //if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Jump"))
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.up * jumpheight;
                 jumping = true;
                 doubleJump++;
                 body2D.gravityScale = 3f;
+                jumpSFX.Play();
             }
         }
     }

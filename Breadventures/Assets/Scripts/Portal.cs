@@ -38,7 +38,8 @@ public class Portal : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.X))
+        //if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.X))
+        if (other.gameObject.tag == "Player" && Input.GetButtonDown("Portal"))
         {
             sceneScript.ChangeScene(sceneName, true, transformID, transformDirect);
         }

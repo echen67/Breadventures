@@ -6,13 +6,17 @@ public class PotatoSkill : MonoBehaviour {
     public int pooledAmount;
     public GameObject[] bullets;
 
+    public int energy = 10;     // amount of energy this skill consumes
+
     private PlayerMovement movementScript;
+    private PlayerEnergy energyScript;
 
     public GameObject potatoBullet;
 
     void Awake()
     {
         movementScript = gameObject.GetComponent<PlayerMovement>();
+        energyScript = GameObject.FindGameObjectWithTag("Scene").GetComponent<PlayerEnergy>();
         bullets = new GameObject[pooledAmount];
         for (int i = 0; i < pooledAmount; i++)
         {
@@ -41,10 +45,18 @@ public class PotatoSkill : MonoBehaviour {
 
     public void FireBullet()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        // first check if you have enough energy
+        if (energy > energyScript.currentEnergy)
+        {
+            return;
+        }
+
+        //if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetButtonDown("Fire2"))
         {
             for(int i = 0; i < pooledAmount; i++)
             {
+                energyScript.UseEnergy(energy);
                 if (!bullets[i].activeInHierarchy)
                 {
                     bullets[i].transform.position = gameObject.transform.position;

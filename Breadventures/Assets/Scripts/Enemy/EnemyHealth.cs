@@ -12,14 +12,22 @@ public class EnemyHealth : MonoBehaviour {
     private GameObject gameManager;
     private PlayerLevel levelScript;
 
+    AudioSource hurtSFX;
+
     void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("Scene");
         levelScript = gameManager.GetComponent<PlayerLevel>();
+        hurtSFX = gameObject.GetComponent<AudioSource>();
     }
 
     public void TakeDamage(float damage)
     {
+        if (hurtSFX != null)
+        {
+            Debug.Log("HURT");
+            hurtSFX.Play();
+        }
         currentHealth -= damage;
         if (currentHealth <= 0)
         {

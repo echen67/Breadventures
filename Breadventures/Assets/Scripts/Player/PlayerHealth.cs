@@ -11,6 +11,10 @@ public class PlayerHealth : MonoBehaviour {
     float timer = 0;
 
     public float percent = 0;
+    public float timeInvincible = 2f;
+
+    bool isInvincible = false;
+    float invincibleTimer = 0;
 
     //Use these to determine max health
     float level;
@@ -19,7 +23,9 @@ public class PlayerHealth : MonoBehaviour {
     PlayerEnergy playerEnergy;
     PlayerLevel playerLevel;
     GameObject healthBar;
+    GameObject player;
     RectTransform healthBarTrans;
+    SpriteRenderer sprite;
 
     void OnEnable() {
         playerLevel = gameObject.GetComponent<PlayerLevel>();
@@ -27,6 +33,8 @@ public class PlayerHealth : MonoBehaviour {
         healthBar = GameObject.FindGameObjectWithTag("Health");
         healthBarTrans = healthBar.GetComponent<RectTransform>();
         level = playerLevel.getLevel();
+        player = GameObject.FindGameObjectWithTag("Player");
+        sprite = player.GetComponent<SpriteRenderer>();
     }
 
     /*void OnLevelWasLoaded()
@@ -45,7 +53,17 @@ public class PlayerHealth : MonoBehaviour {
             else
                 currentHealth += regenRate;
         }
-        UpdateDisplay();
+        UpdateDisplay();    // update health bar ui
+
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+            {
+                isInvincible = false;
+                sprite.color = Color.white;
+            }
+        }
 	}
 
     public void levelUpHealth()
@@ -66,7 +84,16 @@ public class PlayerHealth : MonoBehaviour {
 
     public void TakeDamage(float damage)
     {
+        // don't take damage if currently invincible
+        if (isInvincible)
+        {
+            return;
+        }
+        Debug.Log("TAKE DAMAGE");
         currentHealth -= damage;
+        isInvincible = true;
+        invincibleTimer = timeInvincible;   // 0 --> 2
+        sprite.color = new Color(1f, 0.8f, 0.8f);
         if (currentHealth <= 0)
         {
             Debug.Log("You died");

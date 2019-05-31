@@ -5,6 +5,9 @@ public class PlayerAttack : MonoBehaviour {
 
     public int attackDamage;
     public int attackRange;
+    public int pushback = 10;
+
+    AudioSource punchSound;
 
     int enemiesLayer = 8;
     int enemiesMask = 1 << 8;
@@ -13,6 +16,7 @@ public class PlayerAttack : MonoBehaviour {
 
     void Awake () {
         playerMovement = gameObject.GetComponent<PlayerMovement>();
+        punchSound = gameObject.GetComponent<AudioSource>();
 	}
 	
 	void Update () {
@@ -23,21 +27,33 @@ public class PlayerAttack : MonoBehaviour {
 
         //Debug.Log(hitLeft.collider.gameObject.tag);
 
+        //if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetButtonDown("Fire1"))
+        {
+            punchSound.Play();
+        }
+
         if(hitLeft != false && playerMovement.currentDirection == false)
         {
-            if (hitLeft.collider.gameObject.tag == "Enemy" && Input.GetKey(KeyCode.A))
+            //if (hitLeft.collider.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.A))
+            if (hitLeft.collider.gameObject.tag == "Enemy" && Input.GetButtonDown("Fire1"))
             {
                 EnemyHealth enemyHealth = hitLeft.collider.gameObject.GetComponent<EnemyHealth>();
                 enemyHealth.TakeDamage(attackDamage);
+                Rigidbody2D enemyBody = hitLeft.collider.gameObject.GetComponent<Rigidbody2D>();
+                enemyBody.AddForce(new Vector2(-pushback, 0), ForceMode2D.Impulse);
                 Debug.Log("LEFT");
             }
         }
         if(hitRight != false && playerMovement.currentDirection == true)
         {
-            if (hitRight.collider.gameObject.tag == "Enemy" && Input.GetKey(KeyCode.A))
+            //if (hitRight.collider.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.A))
+            if (hitRight.collider.gameObject.tag == "Enemy" && Input.GetButtonDown("Fire1"))
             {
                 EnemyHealth enemyHealth = hitRight.collider.gameObject.GetComponent<EnemyHealth>();
                 enemyHealth.TakeDamage(attackDamage);
+                Rigidbody2D enemyBody = hitRight.collider.gameObject.GetComponent<Rigidbody2D>();
+                enemyBody.AddForce(new Vector2(pushback, 0), ForceMode2D.Impulse);
                 Debug.Log("RIGHT");
             }
         }
