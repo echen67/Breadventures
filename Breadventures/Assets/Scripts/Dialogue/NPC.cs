@@ -13,21 +13,32 @@ public class NPC : MonoBehaviour {
     public GameObject QuestManager;
     QuestManager QuestManagerScript;
 
+    private GameObject GameManager;
+    private CursorScript cursorScript;
+
     void Start()
     {
-        QuestManagerScript = QuestManager.GetComponent<QuestManager>();
+        //QuestManagerScript = QuestManager.GetComponent<QuestManager>();
+        GameManager = GameObject.FindGameObjectWithTag("Scene");
+        cursorScript = GameManager.GetComponent<CursorScript>();
     }
 
     //for the first display block
     public void OnMouseDown()
     {
-        QuestManagerScript.DisplayText(defaultText, giverName);
-        QuestManagerScript.accepted = accepted;
-        QuestManagerScript.declined = declined;
+        //QuestManagerScript.DisplayText(defaultText, giverName);
+        //QuestManagerScript.accepted = accepted;
+        //QuestManagerScript.declined = declined;
     }
 
-    void OnMouseOver()
+    void OnMouseEnter()
     {
-        Debug.Log("HI");
+        //Debug.Log("HI");
+        cursorScript.SpeechCursor();
+    }
+
+    void OnMouseExit()
+    {
+        cursorScript.DefaultCursor();
     }
 }

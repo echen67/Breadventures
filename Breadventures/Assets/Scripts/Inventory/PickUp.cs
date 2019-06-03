@@ -25,9 +25,9 @@ public class PickUp : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && Input.GetButton("Collect"))
         {
             bool room = inventoryScript.RoomAvailable();
             if (room)
