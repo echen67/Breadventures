@@ -77,6 +77,7 @@ public class InventoryButton : MonoBehaviour {
         }*/
         //canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
         //rectTransform.sizeDelta = new Vector2(0, 0);
     }
 
@@ -89,6 +90,7 @@ public class InventoryButton : MonoBehaviour {
         }*/
         //canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
         //rectTransform.sizeDelta = new Vector2(475f, 475f);
     }
 

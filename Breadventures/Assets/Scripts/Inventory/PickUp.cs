@@ -29,7 +29,7 @@ public class PickUp : MonoBehaviour {
     {
         if (other.tag == "Player" && Input.GetButton("Collect"))
         {
-            bool room = inventoryScript.RoomAvailable();
+            bool room = inventoryScript.RoomAvailable();    // check if there's enough room in inventory
             if (room)
             {
                 inventoryScript.AddItem(title, description, health, food, consumable, stackMax, image);

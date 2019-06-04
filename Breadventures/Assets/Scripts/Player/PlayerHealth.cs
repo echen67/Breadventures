@@ -99,7 +99,7 @@ public class PlayerHealth : MonoBehaviour {
         invincibleTimer = timeInvincible;   // 0 --> 2
         sprite.color = new Color(1f, 0.8f, 0.8f);
         GameObject damageInstance = Instantiate(damagePrefab, player.transform.position, new Quaternion(0, 0, 0, 0), canvas.transform);
-        damageInstance.GetComponent<DamageText>().SetText(damage.ToString());
+        damageInstance.GetComponent<DamageText>().SetText(damage.ToString(), new Color(255, 131, 0, 255));
         if (currentHealth <= 0)
         {
             Debug.Log("You died");

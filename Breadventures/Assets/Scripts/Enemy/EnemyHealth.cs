@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyHealth : MonoBehaviour {
 
     public float currentHealth;
+    public float maxHealth = 10;
     public float exp;
 
     public GameObject[] drops;
@@ -25,6 +26,12 @@ public class EnemyHealth : MonoBehaviour {
         levelScript = gameManager.GetComponent<PlayerLevel>();
         hurtSFX = gameObject.GetComponent<AudioSource>();
         canvas = GameObject.FindGameObjectWithTag("Canvas");
+        currentHealth = maxHealth;
+    }
+
+    private void OnEnable()
+    {
+        currentHealth = maxHealth;
     }
 
     public void TakeDamage(float damage)
@@ -36,7 +43,7 @@ public class EnemyHealth : MonoBehaviour {
         }
         currentHealth -= damage;
         GameObject damageInstance = Instantiate(damagePrefab, transform.position, new Quaternion(), canvas.transform);
-        damageInstance.GetComponent<DamageText>().SetText(damage.ToString());
+        damageInstance.GetComponent<DamageText>().SetText(damage.ToString(), new Color(163, 0, 255, 255));
         if (currentHealth <= 0)
         {
             float decision = Random.value;
@@ -56,7 +63,13 @@ public class EnemyHealth : MonoBehaviour {
 
     void Die()
     {
+        Delay();
         levelScript.AddExp(exp);
         gameObject.SetActive(false);
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSecondsRealtime(hurtSFX.clip.length);
     }
 }

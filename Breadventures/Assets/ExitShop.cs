@@ -19,11 +19,26 @@ public class ExitShop : MonoBehaviour {
 
     void OnMouseDown()
     {
+        //Debug.Log("Exit shop");
+        //canvasGroup.alpha = 0;
+        //shopScript.isShopOpen = false;
+        ////Destroy all the items in the shop
+        //int numChildren = content.transform.childCount;
+        //for(int i = 0; i < numChildren; i++)
+        //{
+        //    GameObject singleChild = content.transform.GetChild(i).gameObject;
+        //    Destroy(singleChild);
+        //}
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit shop");
         canvasGroup.alpha = 0;
         shopScript.isShopOpen = false;
         //Destroy all the items in the shop
         int numChildren = content.transform.childCount;
-        for(int i = 0; i < numChildren; i++)
+        for (int i = 0; i < numChildren; i++)
         {
             GameObject singleChild = content.transform.GetChild(i).gameObject;
             Destroy(singleChild);

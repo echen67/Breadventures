@@ -186,10 +186,10 @@ public class PlayerMovement : MonoBehaviour {
     void Climbing()
     {
         //if (Input.GetKey(KeyCode.UpArrow) && canClimb)
-        if (Input.GetAxis("Vertical") > 0 && canClimb)
+        if (Input.GetAxisRaw("Vertical") > 0 && canClimb)
             transform.Translate(Vector2.up * Time.deltaTime * playerSpeed, Space.World);
         //if(Input.GetKey(KeyCode.DownArrow) && canClimb)
-        if (Input.GetAxis("Vertical") < 0 && canClimb)
+        if (Input.GetAxisRaw("Vertical") < 0 && canClimb)
             transform.Translate(Vector2.down * Time.deltaTime * playerSpeed, Space.World);
     }
 

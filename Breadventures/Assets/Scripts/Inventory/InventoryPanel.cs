@@ -46,10 +46,13 @@ public class InventoryPanel : MonoBehaviour {
     public void AddItem(string title, string description, int health, int food, bool consumable, int stackMax, Sprite sprite)
     {
         //adding onto a stackable slot
+        //search through inventory for item of same type
         for(int i = 0; i < inventorySize; i++)
         {
+            //check to see if that stack has reached the max amount for a stack yet
             if(items[i] == title && amountsList[i] < stackMax)
             {
+                //if not, simply increment the number in that stack
                 amountsList[i]++;
                 textList[i].text = amountsList[i].ToString();
                 return;
@@ -71,6 +74,7 @@ public class InventoryPanel : MonoBehaviour {
         }
     }
 
+    // what's the deal with passing health and food in through the parameters???
     public void UseItem(string title, int health, int food)
     {
         for(int i = 0; i < inventorySize; i++)      //loop through inventory
@@ -81,7 +85,27 @@ public class InventoryPanel : MonoBehaviour {
                 textList[i].text = amountsList[i].ToString();
                 playerHealth.AddHealth(health);
                 playerEnergy.AddEnergy(food);
-                if(amountsList[i] == 0)             //if that slot is now empty
+                if(amountsList[i] == 0)             //if that slot is now empty, clear it up
+                {
+                    textList[i].text = "";
+                    items[i] = "";
+                    slots[i].GetComponent<Image>().sprite = blankSlot;
+                }
+            }
+        }
+    }
+
+    //to be used when npc's request items for quests
+    public void UseItems(string title, int amount)
+    {
+        for (int i = 0; i < inventorySize; i++)
+        {
+            if (items[i] == title && amountsList[i] >= amount)  // if you have the right amount of the right item
+            {
+                amountsList[i] -= amount;
+                textList[i].text = amountsList[i].ToString();
+                // if slot is now empty, clear it
+                if (amountsList[i] == 0)
                 {
                     textList[i].text = "";
                     items[i] = "";

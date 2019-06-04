@@ -48,6 +48,7 @@ public class PlayerAttack : MonoBehaviour {
             if (hitLeft.collider.gameObject.tag == "Enemy" && Input.GetButtonDown("Fire1"))
             {
                 EnemyHealth enemyHealth = hitLeft.collider.gameObject.GetComponent<EnemyHealth>();
+
                 enemyHealth.TakeDamage(attackDamage);
                 Rigidbody2D enemyBody = hitLeft.collider.gameObject.GetComponent<Rigidbody2D>();
                 enemyBody.AddForce(new Vector2(-pushback, 0), ForceMode2D.Impulse);

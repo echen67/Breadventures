@@ -20,10 +20,13 @@ public class DamageText : MonoBehaviour
         //Debug.Log(damageText);
     }
 
-    public void SetText(string text)
+    public void SetText(string text, Color color)
     {
         //Debug.Log("SetText");
         //Debug.Log(damageText);
         damageText.text = text;
+        //damageText.color = Color.green;
+        //animator.SetTrigger("Damage");
+        //Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 }

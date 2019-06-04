@@ -37,6 +37,8 @@ public class Shop : MonoBehaviour {
     {
         Debug.Log("Set up");
         canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
         for (int i = 0; i < shopItemsList.Length; i++)
         {
             
