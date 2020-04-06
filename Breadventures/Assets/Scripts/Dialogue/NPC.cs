@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class NPC : MonoBehaviour {
 
@@ -11,8 +12,11 @@ public class NPC : MonoBehaviour {
     public string accepted;
     public string declined;
 
-    public Quest firstQuest;
-    public Quest secondQuest;
+    public GameObject questPrefab;  //drag in inspector
+
+    public Quest firstQuest = new Quest();
+    public Quest secondQuest = new Quest();
+    private Queue<Quest> questList;
 
     public GameObject QuestManager;
     QuestManager QuestManagerScript;
@@ -20,6 +24,7 @@ public class NPC : MonoBehaviour {
     private GameObject GameManager;
     private CursorScript cursorScript;
     private CanvasGroup dialoguePanel;
+    private GameObject dialogueContent;
 
     void Start()
     {
@@ -27,6 +32,8 @@ public class NPC : MonoBehaviour {
         GameManager = GameObject.FindGameObjectWithTag("Scene");
         cursorScript = GameManager.GetComponent<CursorScript>();
         dialoguePanel = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<CanvasGroup>();
+        dialogueContent = GameObject.FindGameObjectWithTag("DialogueContent");
+        
     }
 
     //for the first display block
@@ -40,6 +47,17 @@ public class NPC : MonoBehaviour {
         dialoguePanel.alpha = 1;
         dialoguePanel.interactable = true;
         dialoguePanel.blocksRaycasts = true;
+
+        questList.Enqueue(firstQuest);
+        questList.Enqueue(secondQuest);
+        foreach (Quest q in questList)
+        {
+            if (q.questState != Quest.State.Unavailable)
+            {
+                GameObject instance = Instantiate(questPrefab) as GameObject;
+                instance.transform.SetParent(dialogueContent.transform, false);
+            }
+        }
     }
 
     void OnMouseEnter()

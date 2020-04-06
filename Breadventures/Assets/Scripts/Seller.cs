@@ -7,7 +7,7 @@ public class Seller : MonoBehaviour {
     //Fill this out
     public GameObject[] itemsForSale;       //fill this out with prefabs of 'pickups'
 
-    public GameObject shopItemPrefab;
+    //public GameObject shopItemPrefab;       //drag in inspector
 
     //References
     private GameObject shopPanel;

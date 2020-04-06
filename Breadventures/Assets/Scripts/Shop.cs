@@ -8,7 +8,7 @@ public class Shop : MonoBehaviour {
 
     public GameObject[] shopItemsList;      //these gameobjects have the pickup script attached, just so you know
     public bool isShopOpen = false;
-    public GameObject shopItemPrefab;
+    public GameObject shopItemPrefab;       //drag in inspector
 
     private Image shopImage;
     private GameObject shopContent;
@@ -33,9 +33,10 @@ public class Shop : MonoBehaviour {
         currencyScript = currency.GetComponent<Currency>();
     }
 
+    // 
     public void SetUp()
     {
-        Debug.Log("Set up");
+        //Debug.Log("Set up");
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;

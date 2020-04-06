@@ -13,6 +13,7 @@ public class Quest
     public int[] needsAmount;
     public GameObject[] rewards;
     public int[] rewardsAmount;
+    public int experienceReward;
 
     public enum State { Unavailable, Available, Progress, Complete}
 }
